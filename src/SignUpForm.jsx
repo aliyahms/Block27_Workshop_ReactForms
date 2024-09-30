@@ -7,15 +7,27 @@ export default function SignUpForm() {
 
   const API_URL = "https://fsa-jwt-practice.herokuapp.com/signup";
 
+  function setToken(props) {
+    const { token, setToken } = props; // desconstruct the setToken function from props ???
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
       if (!response.ok) throw Error(response.statusText);
       const result = await response.json();
       console.log(result);
       setUsername(result.username); // come back to change this
-      setPassword(result.password);
+      setPassword(result.password); // come back if need to delete
+      setToken(result.token);
     } catch (error) {
       setError(error.message);
     }
@@ -31,6 +43,7 @@ export default function SignUpForm() {
           <input
             value={username}
             onChange={(event) => setUsername(event.target.value)}
+            required
           />
         </label>
         <label>
@@ -38,6 +51,7 @@ export default function SignUpForm() {
           <input
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            required
           />
         </label>
         <button>Submit</button>
