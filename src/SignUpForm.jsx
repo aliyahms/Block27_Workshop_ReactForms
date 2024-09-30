@@ -13,15 +13,18 @@ export default function SignUpForm() {
       const response = await fetch(API_URL);
       if (!response.ok) throw Error(response.statusText);
       const result = await response.json();
-      setContacts(result);
-    } catch (e) {
-      console.error(e);
+      console.log(result);
+      setUsername(result.username); // come back to change this
+      setPassword(result.password);
+    } catch (error) {
+      setError(error.message);
     }
   }
 
   return (
     <>
       <h2>Sign Up!</h2>
+      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Username:{" "}
