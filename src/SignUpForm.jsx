@@ -1,19 +1,28 @@
 import { useState } from "react";
 
-const [username, setUsername] = useState("");
-const [password, setPassword] = useState("");
-const [error, setError] = useState(null);
-
 export default function SignUpForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const API_URL = "https://fsa-jwt-practice.herokuapp.com/signup";
+
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("Hello  👋 ");
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw Error(response.statusText);
+      const result = await response.json();
+      setContacts(result);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
     <>
       <h2>Sign Up!</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>
           Username:{" "}
           <input
