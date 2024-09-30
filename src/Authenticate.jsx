@@ -8,6 +8,11 @@ export async function Authenticate() {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
     const result = await response.json();
     setStatus(result.message);
   } catch (e) {
@@ -17,7 +22,7 @@ export async function Authenticate() {
   return (
     <>
       <h2>Authenticate!</h2>
-      <button> Authenticate Token</button>
+      <button onClick={Authenticate}> Authenticate Token</button>
     </>
   );
 }
