@@ -1,6 +1,8 @@
 import React from "react";
 
-export async function Authenticate() {
+const API_URL = "https://fsa-jwt-practice.herokuapp.com/authenticate";
+
+export default async function Authenticate() {
   try {
     const response = await fetch(API_URL, {
       headers: {
@@ -21,8 +23,13 @@ export async function Authenticate() {
 
   return (
     <>
+      <SignUpForm setToken={setToken} setStatus={setStatus} />
+      <hr />
+      <p>{status}</p>
       <h2>Authenticate!</h2>
-      <button onClick={Authenticate}> Authenticate Token</button>
+      {token && (
+        <button onClick={Authenticate}> Authenticate Token</button>
+      )}{" "}
     </>
   );
 }

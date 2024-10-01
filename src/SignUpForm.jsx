@@ -28,6 +28,7 @@ export default function SignUpForm() {
       setUsername(result.username); // come back to change this
       setPassword(result.password); // come back if need to delete
       setToken(result.token);
+      setStatus(result.message);
     } catch (error) {
       setError(error.message);
     }
